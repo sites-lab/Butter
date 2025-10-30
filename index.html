@@ -3,15 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Butter Coffee Shop - Cafenea de elită</title>
+    <title>Butter Coffee Shop - Cafenea Premium</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         /* Stiluri generale */
         :root {
             --primary-color: #2c3e50;
-            --secondary-color: #ecf0f1;
+            --secondary-color: #f8f9fa;
             --accent-color: #7f8c8d;
             --text-color: #333;
             --light-text: #fff;
+            --border-radius: 8px;
+            --box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            --transition: all 0.3s ease;
         }
         
         * {
@@ -25,6 +29,7 @@
             background-color: var(--secondary-color);
             color: var(--text-color);
             line-height: 1.6;
+            overflow-x: hidden;
         }
         
         .container {
@@ -34,6 +39,54 @@
             padding: 0 20px;
         }
         
+        .section-padding {
+            padding: 5rem 0;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+            font-size: 2.2rem;
+            color: var(--primary-color);
+            position: relative;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+        
+        .section-title.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 3px;
+            background-color: var(--accent-color);
+            margin: 15px auto 0;
+        }
+        
+        .btn {
+            display: inline-block;
+            background-color: var(--accent-color);
+            color: var(--light-text);
+            padding: 0.8rem 2rem;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: var(--transition);
+            border: none;
+            cursor: pointer;
+        }
+        
+        .btn:hover {
+            background-color: #95a5a6;
+            transform: translateY(-3px);
+            box-shadow: 0 7px 15px rgba(0,0,0,0.1);
+        }
+        
         /* Header și navigație */
         header {
             background-color: var(--primary-color);
@@ -41,7 +94,7 @@
             padding: 1rem 0;
             position: sticky;
             top: 0;
-            z-index: 100;
+            z-index: 1000;
             box-shadow: 0 2px 10px rgba(0,0,0,0.1);
         }
         
@@ -68,17 +121,30 @@
         
         nav ul li {
             margin-left: 2rem;
+            position: relative;
         }
         
         nav ul li a {
             color: var(--light-text);
             text-decoration: none;
             font-weight: 500;
-            transition: color 0.3s;
+            transition: var(--transition);
+            padding: 5px 0;
         }
         
-        nav ul li a:hover {
-            color: var(--accent-color);
+        nav ul li a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--accent-color);
+            transition: width 0.3s ease;
+        }
+        
+        nav ul li a:hover::after {
+            width: 100%;
         }
         
         .mobile-menu {
@@ -89,87 +155,43 @@
         
         /* Hero Section */
         .hero {
-            background: linear-gradient(rgba(44, 62, 80, 0.8), rgba(44, 62, 80, 0.8)), url('https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
+            background: linear-gradient(rgba(44, 62, 80, 0.85), rgba(44, 62, 80, 0.85)), url('https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
             background-size: cover;
             background-position: center;
+            background-attachment: fixed;
             color: var(--light-text);
-            padding: 8rem 0;
+            padding: 10rem 0;
             text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero-content {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 1s ease, transform 1s ease;
+        }
+        
+        .hero-content.visible {
+            opacity: 1;
+            transform: translateY(0);
         }
         
         .hero h1 {
             font-size: 3.5rem;
-            margin-bottom: 1rem;
+            margin-bottom: 1.5rem;
             text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
         }
         
         .hero p {
             font-size: 1.2rem;
             max-width: 700px;
-            margin: 0 auto 2rem;
-        }
-        
-        .btn {
-            display: inline-block;
-            background-color: var(--accent-color);
-            color: var(--light-text);
-            padding: 0.8rem 2rem;
-            border-radius: 30px;
-            text-decoration: none;
-            font-weight: 600;
-            transition: background-color 0.3s, transform 0.3s;
-        }
-        
-        .btn:hover {
-            background-color: #95a5a6;
-            transform: translateY(-3px);
-        }
-        
-        /* Despre Noi */
-        .about {
-            padding: 5rem 0;
-            background-color: var(--light-text);
-        }
-        
-        .section-title {
-            text-align: center;
-            margin-bottom: 3rem;
-            font-size: 2.2rem;
-            color: var(--primary-color);
-        }
-        
-        .about-content {
-            display: flex;
-            align-items: center;
-            gap: 3rem;
-        }
-        
-        .about-text {
-            flex: 1;
-        }
-        
-        .about-image {
-            flex: 1;
-            border-radius: 10px;
-            overflow: hidden;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-        }
-        
-        .about-image img {
-            width: 100%;
-            height: auto;
-            display: block;
-            transition: transform 0.5s;
-        }
-        
-        .about-image:hover img {
-            transform: scale(1.05);
+            margin: 0 auto 2.5rem;
         }
         
         /* Meniu */
         .menu {
-            padding: 5rem 0;
-            background-color: var(--secondary-color);
+            background-color: var(--light-text);
         }
         
         .menu-categories {
@@ -188,7 +210,7 @@
             border-radius: 30px;
             cursor: pointer;
             font-weight: 600;
-            transition: all 0.3s;
+            transition: var(--transition);
         }
         
         .category-btn.active, .category-btn:hover {
@@ -203,21 +225,34 @@
         }
         
         .menu-item {
-            background-color: var(--light-text);
-            border-radius: 10px;
+            background-color: var(--secondary-color);
+            border-radius: var(--border-radius);
             overflow: hidden;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-            transition: transform 0.3s;
+            box-shadow: var(--box-shadow);
+            transition: var(--transition);
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        
+        .menu-item.visible {
+            opacity: 1;
+            transform: translateY(0);
         }
         
         .menu-item:hover {
             transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
         }
         
         .menu-item img {
             width: 100%;
             height: 200px;
             object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .menu-item:hover img {
+            transform: scale(1.05);
         }
         
         .menu-item-content {
@@ -239,9 +274,63 @@
             font-weight: 700;
         }
         
-        /* Instagram Feed */
+        /* Special Features */
+        .special-features {
+            background-color: var(--secondary-color);
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+        
+        .feature-card {
+            background-color: var(--light-text);
+            padding: 2.5rem 1.5rem;
+            border-radius: var(--border-radius);
+            text-align: center;
+            box-shadow: var(--box-shadow);
+            transition: var(--transition);
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        
+        .feature-card.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+        }
+        
+        .feature-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            color: var(--accent-color);
+            height: 80px;
+            width: 80px;
+            line-height: 80px;
+            border-radius: 50%;
+            background-color: rgba(127, 140, 141, 0.1);
+            margin: 0 auto 1.5rem;
+            transition: var(--transition);
+        }
+        
+        .feature-card:hover .feature-icon {
+            background-color: rgba(127, 140, 141, 0.2);
+            transform: rotate(5deg);
+        }
+        
+        .feature-card h3 {
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+        
+        /* Instagram */
         .instagram {
-            padding: 5rem 0;
             background-color: var(--light-text);
         }
         
@@ -253,17 +342,25 @@
         }
         
         .instagram-item {
-            border-radius: 10px;
+            border-radius: var(--border-radius);
             overflow: hidden;
             height: 200px;
             position: relative;
+            opacity: 0;
+            transform: scale(0.9);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+        
+        .instagram-item.visible {
+            opacity: 1;
+            transform: scale(1);
         }
         
         .instagram-item img {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            transition: transform 0.5s;
+            transition: transform 0.5s ease;
         }
         
         .instagram-item:hover img {
@@ -281,7 +378,7 @@
             align-items: center;
             justify-content: center;
             opacity: 0;
-            transition: opacity 0.3s;
+            transition: var(--transition);
         }
         
         .instagram-item:hover .instagram-overlay {
@@ -290,17 +387,65 @@
         
         .instagram-icon {
             color: var(--light-text);
-            font-size: 2rem;
+            font-size: 1.8rem;
         }
         
         .instagram-cta {
             text-align: center;
         }
         
+        /* Despre Noi */
+        .about {
+            background-color: var(--secondary-color);
+        }
+        
+        .about-content {
+            display: flex;
+            align-items: center;
+            gap: 3rem;
+        }
+        
+        .about-text {
+            flex: 1;
+            opacity: 0;
+            transform: translateX(-30px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+        
+        .about-text.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+        
+        .about-image {
+            flex: 1;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--box-shadow);
+            opacity: 0;
+            transform: translateX(30px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+        
+        .about-image.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+        
+        .about-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+            transition: transform 0.5s ease;
+        }
+        
+        .about-image:hover img {
+            transform: scale(1.05);
+        }
+        
         /* Contact */
         .contact {
-            padding: 5rem 0;
-            background-color: var(--secondary-color);
+            background-color: var(--light-text);
         }
         
         .contact-container {
@@ -323,21 +468,31 @@
         
         .contact-detail {
             display: flex;
-            align-items: center;
-            margin-bottom: 1rem;
+            align-items: flex-start;
+            margin-bottom: 1.5rem;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+        
+        .contact-detail.visible {
+            opacity: 1;
+            transform: translateY(0);
         }
         
         .contact-icon {
             margin-right: 1rem;
             color: var(--accent-color);
             font-size: 1.2rem;
-            width: 30px;
+            width: 24px;
+            text-align: center;
         }
         
         .map {
             height: 300px;
-            border-radius: 10px;
+            border-radius: var(--border-radius);
             overflow: hidden;
+            box-shadow: var(--box-shadow);
         }
         
         .map iframe {
@@ -348,6 +503,14 @@
         
         .form-group {
             margin-bottom: 1.5rem;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+        
+        .form-group.visible {
+            opacity: 1;
+            transform: translateY(0);
         }
         
         .form-group label {
@@ -362,6 +525,13 @@
             border: 1px solid #ddd;
             border-radius: 5px;
             font-size: 1rem;
+            transition: var(--transition);
+        }
+        
+        .form-control:focus {
+            border-color: var(--accent-color);
+            box-shadow: 0 0 0 2px rgba(127, 140, 141, 0.2);
+            outline: none;
         }
         
         textarea.form-control {
@@ -407,11 +577,12 @@
         .footer-links a {
             color: var(--secondary-color);
             text-decoration: none;
-            transition: color 0.3s;
+            transition: var(--transition);
         }
         
         .footer-links a:hover {
             color: var(--light-text);
+            padding-left: 5px;
         }
         
         .social-links {
@@ -430,7 +601,7 @@
             justify-content: center;
             color: var(--primary-color);
             text-decoration: none;
-            transition: background-color 0.3s, transform 0.3s;
+            transition: var(--transition);
         }
         
         .social-link:hover {
@@ -442,41 +613,6 @@
             text-align: center;
             padding-top: 2rem;
             border-top: 1px solid rgba(255,255,255,0.1);
-        }
-        
-        /* Elemente speciale adăugate */
-        .special-features {
-            padding: 5rem 0;
-            background-color: var(--light-text);
-        }
-        
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-        }
-        
-        .feature-card {
-            background-color: var(--secondary-color);
-            padding: 2rem;
-            border-radius: 10px;
-            text-align: center;
-            transition: transform 0.3s;
-        }
-        
-        .feature-card:hover {
-            transform: translateY(-10px);
-        }
-        
-        .feature-icon {
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
-            color: var(--accent-color);
-        }
-        
-        .feature-card h3 {
-            margin-bottom: 1rem;
-            color: var(--primary-color);
         }
         
         /* Responsive Design */
@@ -542,14 +678,16 @@
     <header>
         <div class="container header-container">
             <div class="logo">Butter<span>Coffee</span></div>
-            <div class="mobile-menu">☰</div>
+            <div class="mobile-menu">
+                <i class="fas fa-bars"></i>
+            </div>
             <nav>
                 <ul>
                     <li><a href="#acasa">Acasă</a></li>
-                    <li><a href="#despre">Despre Noi</a></li>
                     <li><a href="#meniu">Meniu</a></li>
-                    <li><a href="#special">Special</a></li>
+                    <li><a href="#special">De ce noi</a></li>
                     <li><a href="#instagram">Instagram</a></li>
+                    <li><a href="#despre">Despre</a></li>
                     <li><a href="#contact">Contact</a></li>
                 </ul>
             </nav>
@@ -559,31 +697,16 @@
     <!-- Hero Section -->
     <section class="hero" id="acasa">
         <div class="container">
-            <h1>Butter Coffee Shop</h1>
-            <p>Descoperă arta cafelei într-un ambient rafinat. O experiență senzorială completă unde fiecare ceașcă spune o poveste.</p>
-            <a href="#meniu" class="btn">Explorează Meniul</a>
-        </div>
-    </section>
-
-    <!-- Despre Noi -->
-    <section class="about" id="despre">
-        <div class="container">
-            <h2 class="section-title">Despre Noi</h2>
-            <div class="about-content">
-                <div class="about-text">
-                    <p>Butter Coffee Shop a luat naștere din pasiunea pentru cafelele de specialitate și dorința de a crea un spațiu în care oaspeții noștri să se simtă ca acasă.</p>
-                    <p>Cu o experiență de peste 5 ani în industria cafelei, am selectat cele mai bune boabe de cafea din întreaga lume și le pregătim cu meticulozitate pentru a oferi o experiență de neuitat.</p>
-                    <p>Misiunea noastră este să aducem bucuria cafelei de calitate într-un ambient plăcut și relaxant, unde fiecare vizită devine o amintire de prețuit.</p>
-                </div>
-                <div class="about-image">
-                    <img src="https://images.unsplash.com/photo-1554118811-1e0d58224f24?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Interiorul cafenelei Butter">
-                </div>
+            <div class="hero-content">
+                <h1>Butter Coffee Shop</h1>
+                <p>Descoperă arta cafelei într-un ambient rafinat. O experiență senzorială completă unde fiecare ceașcă spune o poveste.</p>
+                <a href="#meniu" class="btn">Explorează Meniul</a>
             </div>
         </div>
     </section>
 
     <!-- Meniu -->
-    <section class="menu" id="meniu">
+    <section class="menu section-padding" id="meniu">
         <div class="container">
             <h2 class="section-title">Meniul Nostru</h2>
             <div class="menu-categories">
@@ -595,7 +718,7 @@
             <div class="menu-items">
                 <!-- Cafea -->
                 <div class="menu-item" data-category="cafea">
-                    <img src="https://images.unsplash.com/photo-1544787219-7f47ccb76574?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Espresso">
+                    <img src="https://images.unsplash.com/photo-1544787219-7f47ccb76574?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Espresso">
                     <div class="menu-item-content">
                         <div class="menu-item-title">
                             <h3>Espresso</h3>
@@ -605,7 +728,7 @@
                     </div>
                 </div>
                 <div class="menu-item" data-category="cafea">
-                    <img src="https://images.unsplash.com/photo-1572442388796-11668a67e53d?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Cappuccino">
+                    <img src="https://images.unsplash.com/photo-1572442388796-11668a67e53d?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Cappuccino">
                     <div class="menu-item-content">
                         <div class="menu-item-title">
                             <h3>Cappuccino</h3>
@@ -615,7 +738,7 @@
                     </div>
                 </div>
                 <div class="menu-item" data-category="cafea">
-                    <img src="https://images.unsplash.com/photo-1561047029-3000c68339ca?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Latte Macchiato">
+                    <img src="https://images.unsplash.com/photo-1561047029-3000c68339ca?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Latte Macchiato">
                     <div class="menu-item-content">
                         <div class="menu-item-title">
                             <h3>Latte Macchiato</h3>
@@ -627,7 +750,7 @@
                 
                 <!-- Ceai -->
                 <div class="menu-item" data-category="ceai" style="display: none;">
-                    <img src="https://images.unsplash.com/photo-1556679343-c7306c1976bc?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Ceai Verde">
+                    <img src="https://images.unsplash.com/photo-1556679343-c7306c1976bc?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Ceai Verde">
                     <div class="menu-item-content">
                         <div class="menu-item-title">
                             <h3>Ceai Verde</h3>
@@ -639,7 +762,7 @@
                 
                 <!-- Desert -->
                 <div class="menu-item" data-category="desert" style="display: none;">
-                    <img src="https://images.unsplash.com/photo-1563729784474-d77dbb933a9e?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Tiramisu">
+                    <img src="https://images.unsplash.com/photo-1563729784474-d77dbb933a9e?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Tiramisu">
                     <div class="menu-item-content">
                         <div class="menu-item-title">
                             <h3>Tiramisu</h3>
@@ -651,7 +774,7 @@
                 
                 <!-- Sandwich -->
                 <div class="menu-item" data-category="sandwich" style="display: none;">
-                    <img src="https://images.unsplash.com/photo-1567234669003-dce7a7a88821?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Sandwich Club">
+                    <img src="https://images.unsplash.com/photo-1567234669003-dce7a7a88821?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Sandwich Club">
                     <div class="menu-item-content">
                         <div class="menu-item-title">
                             <h3>Sandwich Club</h3>
@@ -664,28 +787,36 @@
         </div>
     </section>
 
-    <!-- Elemente speciale -->
-    <section class="special-features" id="special">
+    <!-- Special Features -->
+    <section class="special-features section-padding" id="special">
         <div class="container">
             <h2 class="section-title">Ce Ne Face Speciali</h2>
             <div class="features-grid">
                 <div class="feature-card">
-                    <div class="feature-icon">☕</div>
+                    <div class="feature-icon">
+                        <i class="fas fa-coffee"></i>
+                    </div>
                     <h3>Boabe de Calitate</h3>
                     <p>Folosim exclusiv boabe de cafea de specialitate, provenite din cele mai bune plantații din lume.</p>
                 </div>
                 <div class="feature-card">
-                    <div class="feature-icon">👨‍🍳</div>
+                    <div class="feature-icon">
+                        <i class="fas fa-user-graduate"></i>
+                    </div>
                     <h3>Baristi Certificați</h3>
                     <p>Echipa noastră de baristi este formată și certificată pentru a vă oferi cele mai bune preparate.</p>
                 </div>
                 <div class="feature-card">
-                    <div class="feature-icon">🌱</div>
+                    <div class="feature-icon">
+                        <i class="fas fa-leaf"></i>
+                    </div>
                     <h3>Ingrediente Proaspete</h3>
                     <p>Toate produsele noastre sunt proaspete și de cea mai înaltă calitate, selectate zilnic.</p>
                 </div>
                 <div class="feature-card">
-                    <div class="feature-icon">🎨</div>
+                    <div class="feature-icon">
+                        <i class="fas fa-palette"></i>
+                    </div>
                     <h3>Latte Art</h3>
                     <p>Fiecare ceașcă de cafea cu lapte este decorată cu atenție, transformând-o într-o operă de artă.</p>
                 </div>
@@ -694,40 +825,49 @@
     </section>
 
     <!-- Instagram -->
-    <section class="instagram" id="instagram">
+    <section class="instagram section-padding" id="instagram">
         <div class="container">
             <h2 class="section-title">Urmărește-ne pe Instagram</h2>
             <p style="text-align: center; margin-bottom: 2rem;">Alătură-te comunității noastre de peste 10.000 de fani și descoperă momentele noastre zilnice.</p>
             <div class="instagram-feed">
-                <!-- Poze de pe Instagram (placeholder) -->
                 <div class="instagram-item">
                     <img src="https://images.unsplash.com/photo-1509042239860-f550ce710b93?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="Instagram post">
                     <div class="instagram-overlay">
-                        <a href="https://www.instagram.com/butter_coffeeshop" class="instagram-icon">📷</a>
+                        <a href="https://www.instagram.com/butter_coffeeshop" class="instagram-icon">
+                            <i class="fab fa-instagram"></i>
+                        </a>
                     </div>
                 </div>
                 <div class="instagram-item">
                     <img src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="Instagram post">
                     <div class="instagram-overlay">
-                        <a href="https://www.instagram.com/butter_coffeeshop" class="instagram-icon">📷</a>
+                        <a href="https://www.instagram.com/butter_coffeeshop" class="instagram-icon">
+                            <i class="fab fa-instagram"></i>
+                        </a>
                     </div>
                 </div>
                 <div class="instagram-item">
                     <img src="https://images.unsplash.com/photo-1511537190424-bbbab87ac5eb?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="Instagram post">
                     <div class="instagram-overlay">
-                        <a href="https://www.instagram.com/butter_coffeeshop" class="instagram-icon">📷</a>
+                        <a href="https://www.instagram.com/butter_coffeeshop" class="instagram-icon">
+                            <i class="fab fa-instagram"></i>
+                        </a>
                     </div>
                 </div>
                 <div class="instagram-item">
                     <img src="https://images.unsplash.com/photo-1442512595331-e89e73853f31?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="Instagram post">
                     <div class="instagram-overlay">
-                        <a href="https://www.instagram.com/butter_coffeeshop" class="instagram-icon">📷</a>
+                        <a href="https://www.instagram.com/butter_coffeeshop" class="instagram-icon">
+                            <i class="fab fa-instagram"></i>
+                        </a>
                     </div>
                 </div>
                 <div class="instagram-item">
                     <img src="https://images.unsplash.com/photo-1498804103079-a6351b050096?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="Instagram post">
                     <div class="instagram-overlay">
-                        <a href="https://www.instagram.com/butter_coffeeshop" class="instagram-icon">📷</a>
+                        <a href="https://www.instagram.com/butter_coffeeshop" class="instagram-icon">
+                            <i class="fab fa-instagram"></i>
+                        </a>
                     </div>
                 </div>
             </div>
@@ -737,8 +877,26 @@
         </div>
     </section>
 
+    <!-- Despre Noi -->
+    <section class="about section-padding" id="despre">
+        <div class="container">
+            <h2 class="section-title">Despre Noi</h2>
+            <div class="about-content">
+                <div class="about-text">
+                    <p>Butter Coffee Shop a luat naștere din pasiunea pentru cafelele de specialitate și dorința de a crea un spațiu în care oaspeții noștri să se simtă ca acasă.</p>
+                    <p>Cu o experiență de peste 5 ani în industria cafelei, am selectat cele mai bune boabe de cafea din întreaga lume și le pregătim cu meticulozitate pentru a oferi o experiență de neuitat.</p>
+                    <p>Misiunea noastră este să aducem bucuria cafelei de calitate într-un ambient plăcut și relaxant, unde fiecare vizită devine o amintire de prețuit.</p>
+                    <p>Viziunea noastră este să devenim cea mai iubită cafenea din oraș, recunoscută pentru calitatea cafelei, serviciile excelente și atmosfera primitoare.</p>
+                </div>
+                <div class="about-image">
+                    <img src="https://images.unsplash.com/photo-1554118811-1e0d58224f24?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Interiorul cafenelei Butter">
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Contact -->
-    <section class="contact" id="contact">
+    <section class="contact section-padding" id="contact">
         <div class="container">
             <h2 class="section-title">Contact</h2>
             <div class="contact-container">
@@ -746,28 +904,36 @@
                     <h3>Informații de contact</h3>
                     <div class="contact-details">
                         <div class="contact-detail">
-                            <div class="contact-icon">📍</div>
+                            <div class="contact-icon">
+                                <i class="fas fa-map-marker-alt"></i>
+                            </div>
                             <div>
                                 <p><strong>Adresă:</strong></p>
                                 <p>Strada Exemplu, Nr. 123, București</p>
                             </div>
                         </div>
                         <div class="contact-detail">
-                            <div class="contact-icon">📞</div>
+                            <div class="contact-icon">
+                                <i class="fas fa-phone"></i>
+                            </div>
                             <div>
                                 <p><strong>Telefon:</strong></p>
                                 <p>+40 721 123 456</p>
                             </div>
                         </div>
                         <div class="contact-detail">
-                            <div class="contact-icon">✉️</div>
+                            <div class="contact-icon">
+                                <i class="fas fa-envelope"></i>
+                            </div>
                             <div>
                                 <p><strong>Email:</strong></p>
                                 <p>contact@buttercoffee.ro</p>
                             </div>
                         </div>
                         <div class="contact-detail">
-                            <div class="contact-icon">🕒</div>
+                            <div class="contact-icon">
+                                <i class="fas fa-clock"></i>
+                            </div>
                             <div>
                                 <p><strong>Program:</strong></p>
                                 <p>Luni - Vineri: 7:00 - 22:00</p>
@@ -813,18 +979,25 @@
                     <h3>Butter Coffee</h3>
                     <p>O cafenea dedicată pasionaților de cafea de calitate, unde fiecare detaliu contează.</p>
                     <div class="social-links">
-                        <a href="https://www.instagram.com/butter_coffeeshop" class="social-link" target="_blank">📷</a>
-                        <a href="#" class="social-link">📘</a>
-                        <a href="#" class="social-link">🐦</a>
+                        <a href="https://www.instagram.com/butter_coffeeshop" class="social-link" target="_blank">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" class="social-link">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="social-link">
+                            <i class="fab fa-twitter"></i>
+                        </a>
                     </div>
                 </div>
                 <div class="footer-column">
                     <h3>Link-uri rapide</h3>
                     <ul class="footer-links">
                         <li><a href="#acasa">Acasă</a></li>
-                        <li><a href="#despre">Despre Noi</a></li>
                         <li><a href="#meniu">Meniu</a></li>
-                        <li><a href="#special">Special</a></li>
+                        <li><a href="#special">De ce noi</a></li>
+                        <li><a href="#instagram">Instagram</a></li>
+                        <li><a href="#despre">Despre</a></li>
                         <li><a href="#contact">Contact</a></li>
                     </ul>
                 </div>
@@ -878,6 +1051,48 @@
             e.preventDefault();
             alert('Mesajul dumneavoastră a fost trimis cu succes! Vă vom contacta în curând.');
             this.reset();
+        });
+
+        // Animații la scroll
+        function checkVisibility() {
+            const elements = document.querySelectorAll('.section-title, .menu-item, .feature-card, .instagram-item, .about-text, .about-image, .contact-detail, .form-group');
+            
+            elements.forEach(element => {
+                const elementTop = element.getBoundingClientRect().top;
+                const elementVisible = 150;
+                
+                if (elementTop < window.innerHeight - elementVisible) {
+                    element.classList.add('visible');
+                }
+            });
+            
+            // Animație pentru hero content
+            const heroContent = document.querySelector('.hero-content');
+            if (heroContent && !heroContent.classList.contains('visible')) {
+                heroContent.classList.add('visible');
+            }
+        }
+        
+        // Verifică vizibilitatea la încărcare și la scroll
+        window.addEventListener('load', checkVisibility);
+        window.addEventListener('scroll', checkVisibility);
+        
+        // Animație smooth scroll pentru link-uri interne
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
         });
     </script>
 </body>
